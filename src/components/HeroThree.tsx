@@ -1,5 +1,5 @@
-import  { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { 
   CheckCircle, 
   ArrowRight, 
@@ -8,12 +8,24 @@ import {
   Users, 
   Globe, 
   Shield 
-} from 'lucide-react';
+} from "lucide-react";
 
-const LtePricingSection = () => {
-  const [selectedPackage, setSelectedPackage] = useState(null);
+type Feature = {
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  text: string;
+};
 
-  const ltePackages = [
+type Package = {
+  speed: string;
+  price: string;
+  features: Feature[];
+  bestFor: string;
+};
+
+const LtePricingSection: React.FC = () => {
+  const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
+
+  const ltePackages: Package[] = [
     { 
       speed: "10 Mbps", 
       price: "499", 
@@ -88,7 +100,7 @@ const LtePricingSection = () => {
     }
   };
 
-  const handlePackageSelect = (pkg) => {
+  const handlePackageSelect = (pkg: Package) => {
     setSelectedPackage(pkg);
   };
 
@@ -124,14 +136,12 @@ const LtePricingSection = () => {
               key={index}
               variants={cardVariants}
               whileHover="hover"
-              className={`
-                rounded-lg p-6 shadow-xl text-white 
+              className={`rounded-lg p-6 shadow-xl text-white 
                 transition-all duration-300 cursor-pointer
                 flex flex-col h-[500px] 
                 ${selectedPackage === pkg 
                   ? 'bg-gradient-to-r from-blue-600 to-purple-600 border-4 border-white' 
-                  : 'bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800'}
-              `}
+                  : 'bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800'}`}
               onClick={() => handlePackageSelect(pkg)}
             >
               <div className="flex justify-between items-center mb-4">
