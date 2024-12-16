@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Wifi, Globe, Server } from 'lucide-react'
 import gifa from "../assets/video/gifa.gif";
 
