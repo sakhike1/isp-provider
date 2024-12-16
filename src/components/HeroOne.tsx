@@ -1,5 +1,5 @@
 // src/InternetHeroSection.js
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import gifa from "../assets/video/gifa.gif"; // Make sure this image is relevant to your service
 
