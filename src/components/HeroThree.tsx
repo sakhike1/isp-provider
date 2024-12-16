@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { 
   CheckCircle, 
   ArrowRight, 
@@ -7,25 +7,28 @@ import {
   Download, 
   Users, 
   Globe, 
-  Shield 
-} from "lucide-react";
+  Shield,
+  LucideIcon
+} from 'lucide-react';
 
-type Feature = {
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+// Define the type for a package feature
+interface PackageFeature {
+  icon: LucideIcon;
   text: string;
-};
+}
 
-type Package = {
+// Define the type for an LTE package
+interface LtePackage {
   speed: string;
   price: string;
-  features: Feature[];
+  features: PackageFeature[];
   bestFor: string;
-};
+}
 
 const LtePricingSection: React.FC = () => {
-  const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<LtePackage | null>(null);
 
-  const ltePackages: Package[] = [
+  const ltePackages: LtePackage[] = [
     { 
       speed: "10 Mbps", 
       price: "499", 
@@ -100,7 +103,7 @@ const LtePricingSection: React.FC = () => {
     }
   };
 
-  const handlePackageSelect = (pkg: Package) => {
+  const handlePackageSelect = (pkg: LtePackage) => {
     setSelectedPackage(pkg);
   };
 
@@ -131,17 +134,19 @@ const LtePricingSection: React.FC = () => {
           animate="visible"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
         >
-          {ltePackages.map((pkg, index) => (
+          {ltePackages.map((pkg: LtePackage, index: number) => (
             <motion.div
               key={index}
               variants={cardVariants}
               whileHover="hover"
-              className={`rounded-lg p-6 shadow-xl text-white 
+              className={`
+                rounded-lg p-6 shadow-xl text-white 
                 transition-all duration-300 cursor-pointer
                 flex flex-col h-[500px] 
                 ${selectedPackage === pkg 
                   ? 'bg-gradient-to-r from-blue-600 to-purple-600 border-4 border-white' 
-                  : 'bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800'}`}
+                  : 'bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800'}
+              `}
               onClick={() => handlePackageSelect(pkg)}
             >
               <div className="flex justify-between items-center mb-4">
@@ -161,7 +166,7 @@ const LtePricingSection: React.FC = () => {
               </div>
               
               <div className="space-y-3 mb-6 flex-grow">
-                {pkg.features.map((feature, idx) => {
+                {pkg.features.map((feature: PackageFeature, idx: number) => {
                   const FeatureIcon = feature.icon;
                   return (
                     <div key={idx} className="flex items-center space-x-3">
@@ -201,7 +206,7 @@ const LtePricingSection: React.FC = () => {
               <p className="col-span-2"><strong>Best For:</strong> {selectedPackage.bestFor}</p>
               <p className="col-span-2"><strong>Features:</strong></p>
               <ul className="col-span-2 grid grid-cols-2 gap-2">
-                {selectedPackage.features.map((feature, idx) => {
+                {selectedPackage.features.map((feature: PackageFeature, idx: number) => {
                   const FeatureIcon = feature.icon;
                   return (
                     <li key={idx} className="flex items-center space-x-2">
